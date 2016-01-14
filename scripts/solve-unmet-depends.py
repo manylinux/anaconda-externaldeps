@@ -41,13 +41,13 @@ def main():
     p.add_argument('output_fn')
     p.add_argument('--dependsdata')
     p.add_argument('--index-cache', default='.index-cache.json')
-    
+
     args = p.parse_args()
-    
+
     r = Resolve(load_index(args.index_cache))
     with open(args.dependsdata) as f:
         dependsdata = json.load(f)
-    
+
     try:
         plan = r.solve([_fn2fullspec(args.pkg_fn)],
                        features=set(),
@@ -62,14 +62,14 @@ def main():
 
     depends_provides = setreduce(dependsdata[fn]['provides'] for fn in plan)
     requires = setreduce(dependsdata[fn]['requires'] for fn in plan)
-              
+
     with open(args.output_fn, 'w') as f:
-        json.dump({
-            'pkg_fn': args.pkg_fn,
-            'unmet_depends':
-            list(requires - depends_provides)
-        }, f)
-    
+        json.dump(
+            {
+                'pkg_fn': args.pkg_fn,
+                'unmet_depends': list(requires - depends_provides)
+            }, f)
+
 
 if __name__ == '__main__':
     main()

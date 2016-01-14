@@ -22,18 +22,22 @@ def main():
 
     dep2pkgs = {}
     for dep in unmet_depends:
-        pkgs = [pkg_fn for (pkg_fn, record) in data.items() if dep in record['unmet_depends']]
+        pkgs = [pkg_fn
+                for (pkg_fn, record) in data.items()
+                if dep in record['unmet_depends']]
         dep2pkgs[dep] = pkgs
 
     # pprint(dep2pkgs)
-    sorted_deps = sorted(dep2pkgs.keys(), key=lambda k: len(dep2pkgs[k]), reverse=True)
+    sorted_deps = sorted(dep2pkgs.keys(),
+                         key=lambda k: len(dep2pkgs[k]),
+                         reverse=True)
     odeps = OrderedDict()
     for dep in sorted_deps:
         n = len(dep2pkgs[dep])
         odeps[dep] = sorted([fn[:-8] for fn in dep2pkgs[dep]])
 
     print(json.dumps(odeps, indent=4))
-        
+
 
 if __name__ == '__main__':
     main()

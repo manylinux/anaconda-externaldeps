@@ -10,14 +10,17 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def find_so_depinfo(package_dir):
     with open(os.path.join(package_dir, 'info', 'files')) as f:
-        files = '\n'.join(os.path.join(package_dir, f.strip()) for f in f.readlines())
+        files = '\n'.join(os.path.join(package_dir, f.strip())
+                          for f in f.readlines())
 
     with tempfile.SpooledTemporaryFile() as f:
         f.write(files.encode('utf-8'))
 
         for scriptname in ('find-requires', 'find-provides'):
             f.seek(0)
-            stdout = Popen([os.path.join(THIS_DIR, scriptname)], stdin=f, stdout=PIPE).stdout.read()
+            stdout = Popen([os.path.join(THIS_DIR, scriptname)],
+                           stdin=f,
+                           stdout=PIPE).stdout.read()
             yield [fn.strip() for fn in stdout.decode('utf-8').splitlines()]
 
 

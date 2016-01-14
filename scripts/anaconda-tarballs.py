@@ -14,6 +14,6 @@ def main():
     for fn in plan:
         print(os.path.join('tarballs', fn))
 
-    
+
 if __name__ == '__main__':
     main()
