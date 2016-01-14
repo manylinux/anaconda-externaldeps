@@ -5,10 +5,6 @@ TARBALLS := $(addprefix tarballs/, $(FILENAMES))
 JSONS :=    $(patsubst %.tar.bz2,data/%.json, $(FILENAMES))
 UNMETS :=   $(patsubst %.tar.bz2,data/%.unmet,$(FILENAMES))
 
-# Download all the files given in anaconda_tarballs.txt
-tarballs/%.tar.bz2:
-	wget -q https://repo.continuum.io/pkgs/free/linux-64/$(notdir $@) -O $@
-
 # Run scripts/extract-deps.py on each of the tarballs
 data/%.json: tarballs/%.tar.bz2
 	python scripts/extract-deps.py $< $@

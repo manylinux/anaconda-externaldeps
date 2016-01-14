@@ -12,6 +12,7 @@ install:
 
 script:
   - mkdir -p tarballs data
+  - (cd tarballs && cat ../anaconda_tarballs.txt | xargs -n1 -I '{}' sh -c "echo '{}'; wget -q https://repo.continuum.io/pkgs/free/linux-64/'{}'")
   - make -j2 all
   - cat unmet-depends.json
   - cat anaconda-depends.json
