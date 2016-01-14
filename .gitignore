@@ -1,0 +1,7 @@
+*.bz2
+.index-cache.json
+data/
+tarballs/
+unmet-depends.json
+anaconda-depends.json
+dependsdata.json

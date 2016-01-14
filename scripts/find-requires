@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# note this works for both a.out and ELF executables
+
+ulimit -c 0
+#filelist=`xargs -r file | fgrep executable | cut -d: -f1 `
+filelist=`xargs -r file | grep 'ELF.*executable\|ELF.*shared object' | cut -d: -f1 `
+
+#$ readelf -d /home/rmcgibbo/miniconda/pkgs/lxml-3.4.4-py34_0/lib/python3.4/site-packages/lxml/etree.cpython-34m.so | grep NEEDED | cut -d: -f2
+for f in $filelist; do
+    readelf -d $f | grep NEEDED | cut -d: -f2 | cut -c 3- | rev | cut -c 2- | rev
+done | sort -u | xargs -r -n 1 basename | sort -u
+
+
+#for f in $filelist; do
+#    ldd $f | awk '/=>/ { print $1 }'
+#done | sort -u | xargs -r -n 1 basename | sort -u
