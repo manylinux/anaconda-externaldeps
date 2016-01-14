@@ -9,7 +9,11 @@ before_install:
   - export PATH=$HOME/miniconda3/bin:$PATH
 
 install:
-  - mkdir tarballs data
-  - make all
+  - mkdir -p tarballs data
+  - make -j2 all
   - cat unmet-depends.json
   - cat anaconda-depends.json
+
+cache:
+  directories:
+    - tarballs

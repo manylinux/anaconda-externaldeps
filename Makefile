@@ -7,7 +7,7 @@ UNMETS :=   $(patsubst %.tar.bz2,data/%.unmet,$(FILENAMES))
 
 # Download all the files given in anaconda_tarballs.txt
 tarballs/%.tar.bz2:
-	wget https://repo.continuum.io/pkgs/free/linux-64/$(notdir $@) -O $@
+	wget https://repo.continuum.io/pkgs/free/linux-64/$(notdir $@) -O $@ > /dev/null
 
 # Run scripts/extract-deps.py on each of the tarballs
 data/%.json: tarballs/%.tar.bz2
