@@ -5,14 +5,6 @@ TARBALLS := $(addprefix tarballs/, $(FILENAMES))
 JSONS :=    $(patsubst %.tar.bz2,data/%.json, $(FILENAMES))
 UNMETS :=   $(patsubst %.tar.bz2,data/%.unmet,$(FILENAMES))
 
-$(JSONS): | $(DATADIR)
-$(TARBALLDIR): | $(TARBALLS)
-$(DATADIR):
-	mkdir $(DATADIR)
-$(TARBALLDIR):
-	mkdir $(TARBALLDIR)
-
-
 # Download all the files given in anaconda_tarballs.txt
 tarballs/%.tar.bz2:
 	wget https://repo.continuum.io/pkgs/free/linux-64/$(notdir $@) -O $@

@@ -8,7 +8,8 @@ before_install:
   - bash $MINICONDA -b -p $HOME/miniconda
   - export PATH=$HOME/miniconda3/bin:$PATH
 
-install:  
+install:
+  - mkdir tarballs data
   - make all
   - cat unmet-depends.json
   - cat anaconda-depends.json
