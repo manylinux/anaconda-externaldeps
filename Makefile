@@ -7,7 +7,7 @@ UNMETS :=   $(patsubst %.tar.bz2,data/%.unmet,$(FILENAMES))
 
 # Download all the files given in anaconda_tarballs.txt
 tarballs/%.tar.bz2:
-	wget https://repo.continuum.io/pkgs/free/linux-64/$(notdir $@) -O $@ > /dev/null
+	wget -q https://repo.continuum.io/pkgs/free/linux-64/$(notdir $@) -O $@
 
 # Run scripts/extract-deps.py on each of the tarballs
 data/%.json: tarballs/%.tar.bz2
@@ -25,7 +25,7 @@ unmet-depends.json: $(UNMETS)
 	python scripts/merge-jsons.py 'data/*.unmet' unmet-depends.json
 
 anaconda-depends.json: scripts/build-report.py unmet-depends.json
-	python scripts/build-report.py unmet-depends.json --cutoff 10000 > anaconda-depends.json
+	python scripts/build-report.py unmet-depends.json > anaconda-depends.json
 
 clean:
 	rm -rf anaconda-depends.json data
