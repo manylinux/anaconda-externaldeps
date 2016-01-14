@@ -51,9 +51,9 @@ def main():
     try:
         plan = r.solve([_fn2fullspec(args.pkg_fn)],
                        features=set(),
-                       installed=['anaconda 2.4.1'],
+                       installed=set(),
                        update_deps=False)
-        # print(plan)
+
     except SystemExit:
         print('\n\n========wtf is this!\n\n')
         with open(args.output_fn, 'w') as f:
@@ -61,12 +61,14 @@ def main():
             return
 
     depends_provides = setreduce(dependsdata[fn]['provides'] for fn in plan)
-    # requires = set(dependsdata[args.pkg_fn]['requires'])
     requires = setreduce(dependsdata[fn]['requires'] for fn in plan)
-
-    output = {'pkg_fn': args.pkg_fn, 'unmet_depends': list(requires - depends_provides)}
+              
     with open(args.output_fn, 'w') as f:
-        json.dump(output, f)             
+        json.dump({
+            'pkg_fn': args.pkg_fn,
+            'unmet_depends':
+            list(requires - depends_provides)
+        }, f)
     
 
 if __name__ == '__main__':

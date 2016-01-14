@@ -5,11 +5,10 @@ notifications:
 before_install:
   - MINICONDA=Miniconda3-latest-Linux-x86_64.sh
   - wget http://repo.continuum.io/miniconda/$MINICONDA
-  - bash $MINICONDA -b -p /miniconda
+  - bash $MINICONDA -b -p $HOME/miniconda
   - export PATH=$HOME/miniconda3/bin:$PATH
 
 install:  
   - make all
   - cat unmet-depends.json
   - cat anaconda-depends.json
-  
